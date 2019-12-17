@@ -14,8 +14,8 @@ import io.reactivex.annotations.NonNull;
 
 import static androidx.room.Room.databaseBuilder;
 
-@android.arch.persistence.room.Database(entities = {RecordMsg.class}, version = 1, exportSchema = false)
-public abstract class RecordMsgDataBase {
+@Database(entities = {RecordMsg.class}, version = 1, exportSchema = false)
+public abstract class RecordMsgDataBase extends RoomDatabase{
     public abstract RecordMsgDAO recordMsgDAO();
 
     // marking the instance as volatile to ensure atomic access to the variable

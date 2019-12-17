@@ -21,7 +21,7 @@ public class RecordMsg {
     @ColumnInfo(name = "title")
     private String title;
     @ColumnInfo(name = "date")
-    private Date date;
+    private String date;
 
     public int getId() {
         return id;
@@ -55,11 +55,11 @@ public class RecordMsg {
         this.title = title;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 }
