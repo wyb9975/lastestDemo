@@ -1,8 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-  ~ Copyright (c) 2018. This code has been developed by Fabio Ciravegna, The University of Sheffield. All rights reserved. No part of this code can be used without the explicit written permission by the author
-  -->
-
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="uk.ac.shef.oak.com4510.com4510">
     <!--
@@ -19,6 +15,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name="uk.ac.shef.oak.com4510.PicDetailActivity"></activity>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -33,26 +30,24 @@
 
         <activity
             android:name="uk.ac.shef.oak.com4510.MapsActivity"
-            android:label="@string/title_activity_maps">
-        </activity>
+            android:label="@string/title_activity_maps"></activity>
         <activity
             android:name="uk.ac.shef.oak.com4510.PictureActivity"
-            android:label="@string/title_activity_maps">
-        </activity>
+            android:label="@string/title_activity_maps"></activity>
         <activity
             android:name="uk.ac.shef.oak.com4510.MainActivity"
             android:label="@string/title_activity_maps">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name="uk.ac.shef.oak.com4510.StartActivity"
-            android:label="@string/title_activity_maps">
+            android:label="@string/title_activity_maps"></activity>
 
-        </activity>
-        <service android:name="uk.ac.shef.oak.com4510.LocationService"></service>
+        <service android:name="uk.ac.shef.oak.com4510.LocationService" />
     </application>
 
 </manifest>

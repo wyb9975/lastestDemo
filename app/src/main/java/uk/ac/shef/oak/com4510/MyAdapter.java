@@ -55,9 +55,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.View_Holder> {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    /*Intent intent = new Intent(context, ShowImageActivity.class);
+                    Intent intent = new Intent(context, PicDetailActivity.class);
                     intent.putExtra("position", position);
-                    context.startActivity(intent);*/
+                    context.startActivity(intent);
                 }
             });
         }
