@@ -22,7 +22,7 @@ public interface RecordMsgDAO {
     @Delete
     void delete (RecordMsg recordMsg);
 
-    @Query("SELECT * FROM RecordMsg ORDER BY id ASC")
+    @Query("SELECT * FROM RecordMsg ORDER BY date ASC")
     List<RecordMsg> retrieveAllData();
 
     @Delete

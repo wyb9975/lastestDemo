@@ -6,11 +6,15 @@ package uk.ac.shef.oak.com4510;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
+import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.util.Log;
@@ -19,8 +23,10 @@ import android.widget.Button;
 import android.widget.Chronometer;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -38,14 +44,22 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.io.File;
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import pl.aprilapps.easyphotopicker.DefaultCallback;
+import pl.aprilapps.easyphotopicker.EasyImage;
+import uk.ac.shef.oak.com4510.Entity.RecordMsg;
 import uk.ac.shef.oak.com4510.com4510.R;
+import uk.ac.shef.oak.com4510.presenter.Presenter;
 
-public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
-
+public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback,ViewInterface,RetrieveInterface{
+    Presenter mPresenter;
     private static AppCompatActivity activity;
     private static GoogleMap mMap;
     private static final int ACCESS_FINE_LOCATION = 123;
@@ -55,8 +69,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private Button mButtonStart;
     private Button mButtonEnd;
     private PendingIntent mLocationPendingIntent;
+    private static final int REQUEST_READ_EXTERNAL_STORAGE = 2987;
+    private static final int REQUEST_WRITE_EXTERNAL_STORAGE = 7829;
     private Chronometer timer;
-
+    private String currDate;
+    private String title;
+    private double lastLat = -34;
+    private double lastLng = 151;
     public static AppCompatActivity getActivity() {
         return activity;
     }
@@ -71,14 +90,18 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        mPresenter  = new Presenter(getApplicationContext(),this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+
         setActivity(this);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
+        Intent intent = getIntent();
+        currDate = intent.getStringExtra("currDate");
+        title = intent.getStringExtra("title");
 
         mButtonEnd = (Button) findViewById(R.id.button_end);
         mButtonEnd.setOnClickListener(new View.OnClickListener() {
@@ -93,10 +116,53 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         });
         mButtonEnd.setEnabled(false);
         timer = (Chronometer)findViewById(R.id.chronometer);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_camera);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                EasyImage.openCamera(getActivity(), 0);
+            }
+        });
+        // 将计时器清零
+        timer.setBase(SystemClock.elapsedRealtime());
+        //开始计时
+        timer.start();
+        FloatingActionButton fabGallery = (FloatingActionButton) findViewById(R.id.fab_gallery);
+        fabGallery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                EasyImage.openGallery(getActivity(), 0);
+            }
+        });
         initLocations();
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
+        EasyImage.handleActivityResult(requestCode, resultCode, data, this, new DefaultCallback() {
+            @Override
+            public void onImagePickerError(Exception e, EasyImage.ImageSource source, int type) {
+                //Some error handling
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onImagesPicked(List<File> imageFiles, EasyImage.ImageSource source, int type) {
+                onPhotosReturned(imageFiles);
+            }
+
+            @Override
+            public void onCanceled(EasyImage.ImageSource source, int type) {
+                //Cancel handling, you might wanna remove taken photo if it was canceled
+                if (source == EasyImage.ImageSource.CAMERA) {
+                    File photoFile = EasyImage.lastlyTakenButCanceledPhoto(getActivity());
+                    if (photoFile != null) photoFile.delete();
+                }
+            }
+        });
+    }
     private void initLocations() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // Should we show an explanation?
@@ -166,17 +232,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     protected void onResume() {
         super.onResume();
         mLocationRequest = new LocationRequest();
-        mLocationRequest.setInterval(10000);
+        mLocationRequest.setInterval(20000);
         mLocationRequest.setFastestInterval(5000);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         startLocationUpdates(getApplicationContext());
         if (mButtonEnd != null)
             mButtonEnd.setEnabled(true);
-        // 将计时器清零
-        timer.setBase(SystemClock.elapsedRealtime());
-        //开始计时
-        timer.start();
     }
 
 
@@ -189,10 +251,13 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             mCurrentLocation = locationResult.getLastLocation();
             mLastUpdateTime = DateFormat.getTimeInstance().format(new Date());
             Log.i("MAP", "new location " + mCurrentLocation.toString());
+            lastLat = mCurrentLocation.getLatitude();
+            lastLng = mCurrentLocation.getLongitude();
             if (mMap != null)
                 mMap.addMarker(new MarkerOptions().position(new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude()))
                         .title(mLastUpdateTime));
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude()), 14.0f));
+
         }
     };
 
@@ -244,5 +309,96 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 14.0f));
 
+    }
+    /**
+     * add to the grid
+     * @param returnedPhotos
+     */
+    private void onPhotosReturned(List<File> returnedPhotos) {
+        String files = "";
+        for(File file:returnedPhotos){
+            files += file.getAbsolutePath() + ";";
+        }
+
+        mPresenter.insertData((float)0,(float)0,title,currDate,files,lastLat,lastLng);
+        Log.d("1212",title + " "+ files +" "+lastLat +" " +lastLng + " " + currDate);
+
+    }
+    private void checkPermissions(final Context context) {
+        int currentAPIVersion = Build.VERSION.SDK_INT;
+        if (currentAPIVersion >= android.os.Build.VERSION_CODES.M) {
+            if (ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                    AlertDialog.Builder alertBuilder = new AlertDialog.Builder(context);
+                    alertBuilder.setCancelable(true);
+                    alertBuilder.setTitle("Permission necessary");
+                    alertBuilder.setMessage("External storage permission is necessary");
+                    alertBuilder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+                        public void onClick(DialogInterface dialog, int which) {
+                            ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_READ_EXTERNAL_STORAGE);
+                        }
+                    });
+                    AlertDialog alert = alertBuilder.create();
+                    alert.show();
+
+                } else {
+                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_READ_EXTERNAL_STORAGE);
+                }
+
+            }
+            if (ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                    AlertDialog.Builder alertBuilder = new AlertDialog.Builder(context);
+                    alertBuilder.setCancelable(true);
+                    alertBuilder.setTitle("Permission necessary");
+                    alertBuilder.setMessage("Writing external storage permission is necessary");
+                    alertBuilder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+                        public void onClick(DialogInterface dialog, int which) {
+                            ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_WRITE_EXTERNAL_STORAGE);
+                        }
+                    });
+                    AlertDialog alert = alertBuilder.create();
+                    alert.show();
+
+                } else {
+                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_WRITE_EXTERNAL_STORAGE);
+                }
+
+            }
+
+
+        }
+    }
+
+    @Override
+    public void dataRetreived(float temperature, float pressure, String title, String date, String files, double lat, double lng) {
+
+    }
+
+    @Override
+    public void ListDataRetreived(ArrayList<RecordMsg> myDataset) {
+
+    }
+
+    @Override
+    public void errorRetrievingDataDescription(float temperature, float pressure, String title, String date, String files, double lat, double lng, String errorString) {
+
+    }
+
+    @Override
+    public void insertedFeedback(float temperature, float pressure, String title, String date, String files, double lat, double lng) {
+
+    }
+
+    @Override
+    public void error(float temperature, float pressure, String title, String date, String files, double lat, double lng, String errorString) {
+
+    }
+
+    @Override
+    public List<RecordMsg> returnMsgs(List<RecordMsg> msgs) {
+        return null;
     }
 }

@@ -29,9 +29,9 @@ public class Presenter implements PresenterInterface {
      * @param pressure
      */
     @Override
-    public void insertData(float temperature, float pressure,String title, String date,String files) {
+    public void insertData(float temperature, float pressure,String title, String date,String files,double lat,double lng) {
         // send it to the model
-        mModel.insertData(temperature,pressure,title, date,files);
+        mModel.insertData(temperature,pressure,title, date,files,lat,lng);
     }
 
 
@@ -40,9 +40,9 @@ public class Presenter implements PresenterInterface {
      * @param temperature
      * @param pressure
      */
-    public void dataInserted(float temperature, float pressure,String title, String date,String files){
+    public void dataInserted(float temperature, float pressure,String title, String date,String files,double lat,double lng){
         // send it back to the UI
-        userinterface.insertedFeedback(temperature,pressure,title, date,files);
+        userinterface.insertedFeedback(temperature,pressure,title, date,files,lat,lng);
     }
 
     /**
@@ -51,9 +51,9 @@ public class Presenter implements PresenterInterface {
      * @param pressure
      * @param errorString
      */
-    public void errorInsertingData(float temperature, float pressure,String title, String date,String files,String errorString){
+    public void errorInsertingData(float temperature, float pressure,String title, String date,String files,double lat,double lng,String errorString){
         // send it back to the UI
-        userinterface.error(temperature,pressure,title, date,files, errorString);
+        userinterface.error(temperature,pressure,title, date,files, lat,lng,errorString);
     }
 
 

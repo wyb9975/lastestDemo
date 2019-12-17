@@ -25,6 +25,37 @@ public class RecordMsg {
     private String date;
     @ColumnInfo(name = "files")
     private String files;
+    @ColumnInfo(name = "lat")
+    private double lat;
+    @ColumnInfo(name = "lng")
+    private double lng;
+    public RecordMsg(float temperature, float pressure, String title, String date, String files, double lat, double lng) {
+        this.temperature = temperature;
+        this.pressure = pressure;
+        this.title = title;
+        this.date = date;
+        this.files = files;
+        this.lat = lat;
+        this.lng = lng;
+    }
+
+    public double getLat() {
+        return lat;
+    }
+
+    public void setLat(double lat) {
+        this.lat = lat;
+    }
+
+    public double getLng() {
+        return lng;
+    }
+
+    public void setLng(double lng) {
+        this.lng = lng;
+    }
+
+
 
     public String getFiles() {
         return files;
@@ -34,13 +65,13 @@ public class RecordMsg {
         this.files = files;
     }
 
-    public RecordMsg(float temperature, float pressure, String title, String date, String files) {
+    /*public RecordMsg(float temperature, float pressure, String title, String date, String files) {
         this.temperature = temperature;
         this.pressure = pressure;
         this.title = title;
         this.date = date;
         this.files = files;
-    }
+    }*/
 
     public int getId() {
         return id;

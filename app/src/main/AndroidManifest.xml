@@ -36,12 +36,21 @@
             android:label="@string/title_activity_maps">
         </activity>
         <activity
-            android:name="uk.ac.shef.oak.com4510.StartActivity"
+            android:name="uk.ac.shef.oak.com4510.PictureActivity"
+            android:label="@string/title_activity_maps">
+        </activity>
+        <activity
+            android:name="uk.ac.shef.oak.com4510.MainActivity"
             android:label="@string/title_activity_maps">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name="uk.ac.shef.oak.com4510.StartActivity"
+            android:label="@string/title_activity_maps">
+
         </activity>
         <service android:name="uk.ac.shef.oak.com4510.LocationService"></service>
     </application>

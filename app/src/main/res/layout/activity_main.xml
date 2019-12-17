@@ -64,7 +64,7 @@
                 android:background="@null"
                 android:gravity="center"
                 android:scaleType="fitCenter"
-                android:text="Record" />
+                android:text="picture by date" />
 
         </LinearLayout>
         <LinearLayout

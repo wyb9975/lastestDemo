@@ -36,19 +36,19 @@ public class Model {
 
     /**
      *  it generates a random integer (0 and 1) and returns either an error or a correct message
-     * @param title
-     * @param description
+     * @param temperature
+     * @param pressure
      */
-    public void insertData(float temperature, float pressure,String title, String date,String files) {
+    public void insertData(float temperature, float pressure,String title, String date,String files,double lat,double lng) {
         if ((!title.isEmpty()) && (!date.isEmpty())) {
             // data insertion cannot be done on the UI thread. Use an ASync process!!
-            new InsertIntoDbAsync(recordMsgDAO, new RecordMsg(temperature,pressure,title, date,files),presenter).execute();
-        } else presenter.errorInsertingData(temperature,pressure,title, date,files, "data should not be empty");
+            new InsertIntoDbAsync(recordMsgDAO, new RecordMsg(temperature,pressure,title, date,files,lat,lng),presenter).execute();
+        } else presenter.errorInsertingData(temperature,pressure,title, date,files,lat,lng ,"data should not be empty");
     }
 
-    public void getData(float temperature, float pressure,String title, String date,String files)
+    public void getData(float temperature, float pressure,String title, String date,String files,double lat,double lng)
     {
-        new GetFromDbAsync(recordMsgDAO, new RecordMsg(temperature,pressure,title, date,files),rpresenter).execute();
+        new GetFromDbAsync(recordMsgDAO, new RecordMsg(temperature,pressure,title, date,files,lat,lng),rpresenter).execute();
 
     }
 
@@ -84,10 +84,10 @@ public class Model {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-
+            mPresenter.DataRetreived(m_list_RecordMsg);
             if(!m_list_RecordMsg.isEmpty()) {
                 int i = m_list_RecordMsg.size();
-                mPresenter.dataRetrieved(m_list_RecordMsg.get(0).getTemperature(), m_list_RecordMsg.get(0).getPressure(),m_list_RecordMsg.get(0).getTitle(),m_list_RecordMsg.get(0).getDate(),m_list_RecordMsg.get(0).getFiles());
+                mPresenter.dataRetrieved(m_list_RecordMsg.get(0).getTemperature(), m_list_RecordMsg.get(0).getPressure(),m_list_RecordMsg.get(0).getTitle(),m_list_RecordMsg.get(0).getDate(),m_list_RecordMsg.get(0).getFiles(),m_list_RecordMsg.get(0).getLat(),m_list_RecordMsg.get(0).getLng());
                 Log.d("opopopop",m_list_RecordMsg.get(0).getTemperature() + " " + m_list_RecordMsg.get(0).getPressure() + " " + m_list_RecordMsg.get(0).getTitle() + " " + m_list_RecordMsg.get(0).getDate() + " " + m_list_RecordMsg.get(0).getFiles());
                 mPresenter.ListDataRetreived(m_list_RecordMsg);
             }
@@ -120,7 +120,7 @@ public class Model {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            mPresenter.dataInserted(recordMsg.getTemperature(), recordMsg.getPressure(),recordMsg.getTitle(),recordMsg.getDate(),recordMsg.getFiles());
+            mPresenter.dataInserted(recordMsg.getTemperature(), recordMsg.getPressure(),recordMsg.getTitle(),recordMsg.getDate(),recordMsg.getFiles(),recordMsg.getLat(),recordMsg.getLng());
 
         }
     }

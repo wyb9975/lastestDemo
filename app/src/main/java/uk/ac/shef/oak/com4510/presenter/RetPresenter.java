@@ -38,14 +38,14 @@ public class RetPresenter implements RetPresenterInterface{
      * @param pressure
      */
     @Override
-    public void getData(float temperature, float pressure,String title, String date,String files) {
+    public void getData(float temperature, float pressure,String title, String date,String files,double lat,double lng) {
         // send it to the model
-        mModel.getData(temperature,pressure,title, date,files);
+        mModel.getData(temperature,pressure,title, date,files,lat,lng);
     }
 
-    public void dataRetrieved(float temperature, float pressure,String title, String date,String files){
+    public void dataRetrieved(float temperature, float pressure,String title, String date,String files,double lat,double lng){
         // send it back to the UI
-        userinterface.dataRetreived(temperature,pressure,title, date,files);
+        userinterface.dataRetreived(temperature,pressure,title, date,files,lat,lng);
     }
 
     public void ListDataRetreived(ArrayList<RecordMsg> myDataset){
@@ -53,10 +53,15 @@ public class RetPresenter implements RetPresenterInterface{
         userinterface.ListDataRetreived(myDataset);
 
     };
+    public void DataRetreived(ArrayList<RecordMsg> myDataset){
 
-    public void errorRetrievingTitleDescription(float temperature, float pressure,String title, String date,String files, String errorString){
+        userinterface.returnMsgs(myDataset);
+
+    };
+
+    public void errorRetrievingTitleDescription(float temperature, float pressure,String title, String date,String files,double lat,double lng, String errorString){
         // send it back to the UI
-        userinterface.errorRetrievingDataDescription(temperature,pressure,title, date,files, errorString);
+        userinterface.errorRetrievingDataDescription(temperature,pressure,title, date,files,lat,lng, errorString);
     }
 
     public List<RecordMsg> GetListElements()
