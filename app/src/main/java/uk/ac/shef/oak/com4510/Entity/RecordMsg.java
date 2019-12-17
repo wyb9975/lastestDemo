@@ -8,11 +8,12 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 @Entity
 public class RecordMsg {
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     private int id;
     @ColumnInfo(name = "temperature")
     private float temperature;
@@ -22,6 +23,24 @@ public class RecordMsg {
     private String title;
     @ColumnInfo(name = "date")
     private String date;
+    @ColumnInfo(name = "files")
+    private String files;
+
+    public String getFiles() {
+        return files;
+    }
+
+    public void setFiles(String files) {
+        this.files = files;
+    }
+
+    public RecordMsg(float temperature, float pressure, String title, String date, String files) {
+        this.temperature = temperature;
+        this.pressure = pressure;
+        this.title = title;
+        this.date = date;
+        this.files = files;
+    }
 
     public int getId() {
         return id;
