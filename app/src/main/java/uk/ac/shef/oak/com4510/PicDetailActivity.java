@@ -6,7 +6,9 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -29,17 +31,32 @@ public class PicDetailActivity extends AppCompatActivity implements OnMapReadyCa
     private RetPresenter retPresenter;
     private static GoogleMap mMap;
     private ImageView imageView;
+    private TextView textView;
+
+    private LatLng center;
+
+    private String fileName;
+    private String title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pic_detail);
         retPresenter = new RetPresenter(getApplicationContext(), this);
-        Intent intent = getIntent();
+        textView = findViewById(R.id.pd_tv);
+        fileName = getIntent().getStringExtra(POSITION);
+        float a = 0;
+        float b = 0;
+        String title = "";
+        String date = "";
+        String files = "";
+        double lat = 0;
+        double lng = 0;
+        retPresenter.getData(a, b, title, date, files, lat, lng);
 
         imageView = findViewById(R.id.pd_image);
 
-        Bitmap myBitmap = BitmapFactory.decodeFile(intent.getStringExtra(POSITION));
+        Bitmap myBitmap = BitmapFactory.decodeFile(fileName);
         imageView.setImageBitmap(myBitmap);
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
@@ -63,11 +80,12 @@ public class PicDetailActivity extends AppCompatActivity implements OnMapReadyCa
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         mMap.getUiSettings().setZoomControlsEnabled(true);
-        // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 14.0f));
-
+//        // Add a marker in Sydney and move the camera
+//        LatLng sydney = new LatLng(-34, 151);
+//        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+//        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 14.0f));
+        mMap.addMarker(new MarkerOptions().position(center).title(title));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(center, 14.0f));
     }
 
     @Override
@@ -97,6 +115,22 @@ public class PicDetailActivity extends AppCompatActivity implements OnMapReadyCa
 
     @Override
     public List<RecordMsg> returnMsgs(List<RecordMsg> msgs) {
-        return null;
+        Log.d("tag", msgs.size() + "");
+        fileName = getIntent().getStringExtra(POSITION);
+        Log.d("tag", fileName);
+        for (RecordMsg record : msgs) {
+            Log.d("tag", record.getFiles());
+            if (record.getFiles().equals(fileName + ";")) {
+                Log.d("tag", record.getFiles());
+                textView = findViewById(R.id.pd_tv);
+                textView.setText("Title: " + record.getTitle()
+                        + "    Temperture: " + record.getTemperature()
+                        + "℃    Pressure: " + record.getPressure());
+                center = new LatLng(record.getLat(), record.getLng());
+                title = record.getTitle();
+
+            }
+        }
+        return msgs;
     }
 }
