@@ -41,6 +41,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -76,6 +77,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private String title;
     private double lastLat = -34;
     private double lastLng = 151;
+
+    private List<Location> locationList = new ArrayList<>();
+
     public static AppCompatActivity getActivity() {
         return activity;
     }
@@ -253,9 +257,21 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             Log.i("MAP", "new location " + mCurrentLocation.toString());
             lastLat = mCurrentLocation.getLatitude();
             lastLng = mCurrentLocation.getLongitude();
-            if (mMap != null)
+            if (mMap != null) {
+                locationList.add(mCurrentLocation);
                 mMap.addMarker(new MarkerOptions().position(new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude()))
                         .title(mLastUpdateTime));
+            }
+
+            if (locationList.size() >= 2) {
+                int tmpLength = locationList.size();
+                // Connect last two points
+                PolylineOptions polylineOptions = new PolylineOptions();
+                polylineOptions.add(new LatLng(locationList.get(tmpLength - 2).getLatitude(), locationList.get(tmpLength - 2).getLongitude()));
+                polylineOptions.add(new LatLng(locationList.get(tmpLength - 1).getLatitude(), locationList.get(tmpLength - 1).getLongitude()));
+                mMap.addPolyline(polylineOptions);
+            }
+
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude()), 14.0f));
 
         }

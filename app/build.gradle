@@ -13,11 +13,11 @@ android {
             storePassword 'com4510iscool'
         }
     }
-    compileSdkVersion 28
+    compileSdkVersion 26
     defaultConfig {
         applicationId "uk.ac.shef.oak.com4510"
         minSdkVersion 18
-        targetSdkVersion 28
+        targetSdkVersion 26
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
