@@ -22,13 +22,15 @@ import uk.ac.shef.oak.com4510.com4510.R;
 import uk.ac.shef.oak.com4510.presenter.Presenter;
 import uk.ac.shef.oak.com4510.presenter.RetPresenter;
 
-public class StartActivity extends AppCompatActivity implements ViewInterface,RetrieveInterface{
+/**
+ * The activity starting a new trip by user.
+ */
+public class StartActivity extends AppCompatActivity{
     private Button mButtonStart;
     private EditText editText;
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        final Presenter mPresenter= new Presenter(getApplicationContext(),this);
         setContentView(R.layout.activity_start);
         mButtonStart = (Button) findViewById(R.id.button_start);
         editText = (EditText)findViewById(R.id.editTitle);
@@ -50,47 +52,14 @@ public class StartActivity extends AppCompatActivity implements ViewInterface,Re
                 startActivity(intent);
             }
         });
-        /*mPresenter.insertData((float)0.1,(float)0.1,"1000","1000","1000");
-        final RetPresenter mPresenter2= new RetPresenter(getApplicationContext(),this);
-        float a = 0;
-        float b = 0;
-        String title = "";
-        String date = "";
-        String files = "";
-        mPresenter2.getData(a, b,title,date,files);
-        Log.d("opopopop",a + " " + b + " " + title + " " + date + " " + files);*/
     }
 
-    @Override
-    public void dataRetreived(float temperature, float pressure, String title, String date, String files, double lat, double lng) {
-
-    }
-
-    @Override
-    public void ListDataRetreived(ArrayList<RecordMsg> myDataset) {
-
-    }
-
-    @Override
-    public void errorRetrievingDataDescription(float temperature, float pressure, String title, String date, String files, double lat, double lng, String errorString) {
-
-    }
-
-    @Override
-    public void insertedFeedback(float temperature, float pressure, String title, String date, String files, double lat, double lng) {
-
-    }
-
-    @Override
-    public void error(float temperature, float pressure, String title, String date, String files, double lat, double lng, String errorString) {
-
-    }
-
-    @Override
-    public List<RecordMsg> returnMsgs(List<RecordMsg> msgs) {
-        return null;
-    }
-
+    /**
+     * Convert a number to a string with leading 0.
+     *
+     * @param a the number
+     * @return the string with leading 0
+     */
     String convertDate(int a){
         String result  =  a + "";
         if(a < 10){

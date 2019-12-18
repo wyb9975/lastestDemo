@@ -14,13 +14,27 @@ import io.reactivex.annotations.NonNull;
 
 import static androidx.room.Room.databaseBuilder;
 
+/**
+ * The type Record msg data base.
+ */
 @Database(entities = {RecordMsg.class}, version = 1, exportSchema = false)
 public abstract class RecordMsgDataBase extends RoomDatabase{
+    /**
+     * Record msg dao record msg dao.
+     *
+     * @return the record msg dao
+     */
     public abstract RecordMsgDAO recordMsgDAO();
 
     // marking the instance as volatile to ensure atomic access to the variable
     private static volatile RecordMsgDataBase INSTANCE;
 
+    /**
+     * Gets database.
+     *
+     * @param context the context
+     * @return the database
+     */
     public static RecordMsgDataBase getDatabase(final Context context) {
         if (INSTANCE == null) {
             synchronized (RecordMsgDataBase.class) {

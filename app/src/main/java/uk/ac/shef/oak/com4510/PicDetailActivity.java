@@ -24,6 +24,9 @@ import uk.ac.shef.oak.com4510.Entity.RecordMsg;
 import uk.ac.shef.oak.com4510.com4510.R;
 import uk.ac.shef.oak.com4510.presenter.RetPresenter;
 
+/**
+ * The activity used to Inspect the details of a photo.
+ */
 public class PicDetailActivity extends AppCompatActivity implements OnMapReadyCallback, ViewInterface, RetrieveInterface {
 
     private static final String POSITION = "position";

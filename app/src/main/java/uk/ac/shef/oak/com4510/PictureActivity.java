@@ -12,14 +12,21 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import uk.ac.shef.oak.com4510.Entity.RecordMsg;
 import uk.ac.shef.oak.com4510.com4510.R;
 import uk.ac.shef.oak.com4510.presenter.RetPresenter;
 
+/**
+ * The activity used to browse previews of photos.
+ */
 public class PictureActivity extends AppCompatActivity implements RetrieveInterface{
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter  mAdapter;
+    /**
+     * The Rpresenter.
+     */
     RetPresenter rpresenter;
     private String date;
     @Override
@@ -65,7 +72,13 @@ public class PictureActivity extends AppCompatActivity implements RetrieveInterf
             }
             String path = msgs.get(i).getFiles();
             path = path.substring(0,path.length() - 1);
-            files.add(path);
+            StringTokenizer st = new StringTokenizer(path, ";");
+            while(st.hasMoreElements()){
+                String temp = st.nextToken();
+                if(temp != ""){
+                    files.add(temp);
+                }
+            }
         }
         mAdapter= new MyAdapter(files);
         mRecyclerView.setAdapter(mAdapter);

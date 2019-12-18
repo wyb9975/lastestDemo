@@ -11,20 +11,48 @@ import androidx.room.Query;
 
 import java.util.List;
 
+/**
+ * The interface Record msg dao.
+ */
 @Dao
 public interface RecordMsgDAO {
+    /**
+     * Insert all.
+     *
+     * @param recordMsg the record msg
+     */
     @Insert
     void insertAll(RecordMsg... recordMsg);
 
+    /**
+     * Insert.
+     *
+     * @param recordMsg the record msg
+     */
     @Insert
     void insert(RecordMsg recordMsg);
 
+    /**
+     * Delete.
+     *
+     * @param recordMsg the record msg
+     */
     @Delete
     void delete (RecordMsg recordMsg);
 
+    /**
+     * Retrieve all data list.
+     *
+     * @return the list
+     */
     @Query("SELECT * FROM RecordMsg ORDER BY date ASC")
     List<RecordMsg> retrieveAllData();
 
+    /**
+     * Delete all.
+     *
+     * @param recordMsg the record msg
+     */
     @Delete
     void deleteAll(RecordMsg...recordMsg);
 }

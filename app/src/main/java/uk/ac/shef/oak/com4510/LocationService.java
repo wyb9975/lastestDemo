@@ -18,14 +18,25 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.text.DateFormat;
 import java.util.Date;
 
+/**
+ * The type Location service.
+ */
 public class LocationService extends IntentService {
     private Location mCurrentLocation;
     private String mLastUpdateTime;
 
+    /**
+     * Instantiates a new Location service.
+     *
+     * @param name the name
+     */
     public LocationService(String name) {
         super(name);
     }
 
+    /**
+     * Instantiates a new Location service.
+     */
     public LocationService() {
         super("Location Intent");
     }

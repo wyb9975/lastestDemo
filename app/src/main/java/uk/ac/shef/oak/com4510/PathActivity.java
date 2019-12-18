@@ -17,10 +17,16 @@ import uk.ac.shef.oak.com4510.Entity.RecordMsg;
 import uk.ac.shef.oak.com4510.com4510.R;
 import uk.ac.shef.oak.com4510.presenter.RetPresenter;
 
+/**
+ * The activity used to browse picture via a list .
+ */
 public class PathActivity extends AppCompatActivity implements RetrieveInterface{
     private RecyclerView mRecyclerView;
     private ListAdapter  mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    /**
+     * The Rpresenter.
+     */
     RetPresenter rpresenter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +75,13 @@ public class PathActivity extends AppCompatActivity implements RetrieveInterface
     public void errorRetrievingDataDescription(float temperature, float pressure, String title, String date, String files, double lat, double lng, String errorString) {
 
     }
+
+    /**
+     * Generate list array list.
+     *
+     * @param msgs the msgs
+     * @return the array list
+     */
     ArrayList<ArrayList<RecordMsg>> generateList(List<RecordMsg> msgs){
         ArrayList<RecordMsg> list = new ArrayList<RecordMsg>();
         ArrayList<ArrayList<RecordMsg>> result = new ArrayList<ArrayList<RecordMsg>>();

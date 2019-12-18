@@ -20,14 +20,28 @@ import java.util.List;
 
 import uk.ac.shef.oak.com4510.com4510.R;
 
+/**
+ * adapter interface that connects path data and pictureActivity .
+ */
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.View_Holder> {
     static private Context context;
     private static List<String> files;
 
+    /**
+     * Instantiates a new My adapter.
+     *
+     * @param files the files
+     */
     public MyAdapter(List<String> files) {
         this.files = files;
     }
 
+    /**
+     * Instantiates a new My adapter.
+     *
+     * @param cont  the cont
+     * @param files the files
+     */
     public MyAdapter(Context cont, List<String> files) {
         super();
         this.files = files;
@@ -65,7 +79,13 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.View_Holder> {
     }
 
 
-    // convenience method for getting data at click position
+    /**
+     * Gets item.
+     *
+     * @param id the id
+     * @return the item
+     */
+// convenience method for getting data at click position
     String getItem(int id) {
         return files.get(id);
     }
@@ -75,10 +95,21 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.View_Holder> {
         return files.size();
     }
 
+    /**
+     * The type View holder.
+     */
     public class View_Holder extends RecyclerView.ViewHolder  {
+        /**
+         * The Image view.
+         */
         ImageView imageView;
 
 
+        /**
+         * Instantiates a new View holder.
+         *
+         * @param itemView the item view
+         */
         View_Holder(View itemView) {
             super(itemView);
             imageView = (ImageView) itemView.findViewById(R.id.image_item);
@@ -88,10 +119,20 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.View_Holder> {
 
     }
 
+    /**
+     * Gets items.
+     *
+     * @return the items
+     */
     public static List<String> getItems() {
         return files;
     }
 
+    /**
+     * Sets items.
+     *
+     * @param files the files
+     */
     public static void setItems(List<String> files) {
         MyAdapter.files = files;
     }

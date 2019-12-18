@@ -1,12 +1,7 @@
 package uk.ac.shef.oak.com4510.presenter;
 
-/*
- * Copyright (c) 2019. This code has been developed by Fabio Ciravegna, The University of Sheffield. All rights reserved. No part of this code can be used without the explicit written permission by the author
- */
-
 
 import android.content.Context;
-import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,15 +11,26 @@ import uk.ac.shef.oak.com4510.Entity.RecordMsg;
 import uk.ac.shef.oak.com4510.RetrieveInterface;
 
 
+/**
+ * The type Retreive presenter.
+ */
 public class RetPresenter implements RetPresenterInterface{
 
+    /**
+     * The Userinterface.
+     */
     RetrieveInterface userinterface;
+    /**
+     * The M model.
+     */
     Model mModel;
     private final List<RecordMsg> m_list_RecordMsg = new ArrayList<>();
 
     /**
      * the presenter does not know anything about the actual UI passed as parameter as it comes as an instance of the UI interface
-     * @param application
+     *
+     * @param context     the context
+     * @param application the application
      */
     public RetPresenter(Context context, RetrieveInterface application) {
         userinterface= application;
@@ -43,6 +49,17 @@ public class RetPresenter implements RetPresenterInterface{
         mModel.getData(temperature,pressure,title, date,files,lat,lng);
     }
 
+    /**
+     * Data retrieved.
+     *
+     * @param temperature the temperature
+     * @param pressure    the pressure
+     * @param title       the title
+     * @param date        the date
+     * @param files       the files
+     * @param lat         the lat
+     * @param lng         the lng
+     */
     public void dataRetrieved(float temperature, float pressure,String title, String date,String files,double lat,double lng){
         // send it back to the UI
         userinterface.dataRetreived(temperature,pressure,title, date,files,lat,lng);
@@ -53,17 +70,40 @@ public class RetPresenter implements RetPresenterInterface{
         userinterface.ListDataRetreived(myDataset);
 
     };
+
+    /**
+     * Data retreived.
+     *
+     * @param myDataset the my dataset
+     */
     public void DataRetreived(ArrayList<RecordMsg> myDataset){
 
         userinterface.returnMsgs(myDataset);
 
     };
 
-    public void errorRetrievingTitleDescription(float temperature, float pressure,String title, String date,String files,double lat,double lng, String errorString){
+    /**
+     * Error retrieving data
+     *
+     * @param temperature the temperature
+     * @param pressure    the pressure
+     * @param title       the title
+     * @param date        the date
+     * @param files       the files
+     * @param lat         the lat
+     * @param lng         the lng
+     * @param errorString the error string
+     */
+    public void errorRetrieving(float temperature, float pressure,String title, String date,String files,double lat,double lng, String errorString){
         // send it back to the UI
         userinterface.errorRetrievingDataDescription(temperature,pressure,title, date,files,lat,lng, errorString);
     }
 
+    /**
+     * Get list elements list.
+     *
+     * @return the list
+     */
     public List<RecordMsg> GetListElements()
     {
         return m_list_RecordMsg ;

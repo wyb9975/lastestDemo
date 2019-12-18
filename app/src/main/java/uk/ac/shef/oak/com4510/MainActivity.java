@@ -9,12 +9,32 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import uk.ac.shef.oak.com4510.com4510.R;
 
+/**
+ * Program entry
+ * There are three buttons on the interface
+ *
+ * @author Yuzhou Zhang
+ * @version V1.0
+ */
 public class MainActivity extends AppCompatActivity {
 
+    /**
+     * The Trip button.
+     */
     Button tripButton;
+    /**
+     * The Browse button.
+     */
     Button browseButton;
+    /**
+     * The Path button.
+     */
     Button pathButton;
     @Override
+    /**
+     *do some necessary initialization work when this activity starts
+     *@param savedInstanceState
+     */
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);

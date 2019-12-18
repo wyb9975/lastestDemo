@@ -19,19 +19,40 @@ import java.util.List;
 import uk.ac.shef.oak.com4510.Entity.RecordMsg;
 import uk.ac.shef.oak.com4510.com4510.R;
 
+/**
+ * adapter interface that connects path data and pathActivity .
+ */
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.View_Holder> {
     private Context context;
     private static ArrayList<ArrayList<RecordMsg>> items;
 
+    /**
+     * Instantiates a new List adapter.
+     *
+     * @param items the items
+     */
     public ListAdapter(ArrayList<ArrayList<RecordMsg>> items) {
         this.items = items;
     }
 
+    /**
+     * Instantiates a new List adapter.
+     *
+     * @param cont  the cont
+     * @param items the items
+     */
     public ListAdapter(Context cont, ArrayList<ArrayList<RecordMsg>> items) {
         super();
         this.items = items;
         context = cont;
     }
+
+    /**
+     * Gets item.
+     *
+     * @param id the id
+     * @return the item
+     */
     ArrayList<RecordMsg> getItem(int id) {
         return items.get(id);
     }
@@ -79,10 +100,24 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.View_Holder> {
         return items.size();
     }
 
+    /**
+     * The type View holder.
+     */
     public class View_Holder extends RecyclerView.ViewHolder{
+        /**
+         * The Title.
+         */
         TextView title;
+        /**
+         * The Preview.
+         */
         TextView preview;
 
+        /**
+         * Instantiates a new View holder.
+         *
+         * @param itemView the item view
+         */
         View_Holder(View itemView) {
             super(itemView);
             title = (TextView) itemView.findViewById(R.id.title);

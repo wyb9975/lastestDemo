@@ -12,14 +12,29 @@ import uk.ac.shef.oak.com4510.presenter.Presenter;
 import uk.ac.shef.oak.com4510.presenter.RetPresenter;
 
 
+/**
+ * The type Model.
+ */
 public class Model {
     private final RecordMsgDAO recordMsgDAO;
+    /**
+     * The Presenter.
+     */
     Presenter presenter;
+    /**
+     * The Rpresenter.
+     */
     RetPresenter rpresenter;
 
     //private final List<PhotoData> m_list_PhotoData = new ArrayList<>();
 
 
+    /**
+     * Instantiates a new Model.
+     *
+     * @param context   the context
+     * @param presenter the presenter
+     */
     public Model(Context context, Presenter presenter) {
         this.presenter= presenter;
 
@@ -27,6 +42,12 @@ public class Model {
         recordMsgDAO = db.recordMsgDAO();
     }
 
+    /**
+     * Instantiates a new Model.
+     *
+     * @param context    the context
+     * @param rpresenter the rpresenter
+     */
     public Model(Context context, RetPresenter rpresenter) {
         this.rpresenter= rpresenter;
 
@@ -35,9 +56,15 @@ public class Model {
     }
 
     /**
-     *  it generates a random integer (0 and 1) and returns either an error or a correct message
-     * @param temperature
-     * @param pressure
+     * use dao to insert data into database
+     *
+     * @param temperature the temperature
+     * @param pressure    the pressure
+     * @param title       the title
+     * @param date        the date
+     * @param files       the files
+     * @param lat         the lat
+     * @param lng         the lng
      */
     public void insertData(float temperature, float pressure,String title, String date,String files,double lat,double lng) {
         if ((!title.isEmpty()) && (!date.isEmpty())) {
@@ -46,6 +73,17 @@ public class Model {
         } else presenter.errorInsertingData(temperature,pressure,title, date,files,lat,lng ,"data should not be empty");
     }
 
+    /**
+     * Gets data.
+     *
+     * @param temperature the temperature
+     * @param pressure    the pressure
+     * @param title       the title
+     * @param date        the date
+     * @param files       the files
+     * @param lat         the lat
+     * @param lng         the lng
+     */
     public void getData(float temperature, float pressure,String title, String date,String files,double lat,double lng)
     {
         new GetFromDbAsync(recordMsgDAO, new RecordMsg(temperature,pressure,title, date,files,lat,lng),rpresenter).execute();
@@ -63,6 +101,13 @@ public class Model {
 
         private final ArrayList<RecordMsg> m_list_RecordMsg = new ArrayList<>();
 
+        /**
+         * Instantiates a new Get from db async.
+         *
+         * @param dao        the dao
+         * @param data       the data
+         * @param rpresenter the rpresenter
+         */
         GetFromDbAsync(RecordMsgDAO dao, RecordMsg data, RetPresenter rpresenter) {
             recordMsgDAO = dao;
             recordMsg= data;
@@ -104,6 +149,13 @@ public class Model {
         private final RecordMsg recordMsg;
         private final Presenter mPresenter;
 
+        /**
+         * Instantiates a new Insert into db async.
+         *
+         * @param dao       the dao
+         * @param data      the data
+         * @param presenter the presenter
+         */
         InsertIntoDbAsync(RecordMsgDAO dao, RecordMsg data, Presenter presenter) {
             recordMsgDAO = dao;
             recordMsg= data;

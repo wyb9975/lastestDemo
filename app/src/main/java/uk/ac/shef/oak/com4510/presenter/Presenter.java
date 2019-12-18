@@ -1,21 +1,28 @@
 package uk.ac.shef.oak.com4510.presenter;
 
-/*
- * Copyright (c) 2018. This code has been developed by Fabio Ciravegna, The University of Sheffield. All rights reserved. No part of this code can be used without the explicit written permission by the author
- */
-
 
 import android.content.Context;
 import uk.ac.shef.oak.com4510.Entity.Model;
 import uk.ac.shef.oak.com4510.ViewInterface;
 
+/**
+ * The type Presenter.
+ */
 public class Presenter implements PresenterInterface {
+    /**
+     * The Userinterface.
+     */
     ViewInterface userinterface;
+    /**
+     * The M model.
+     */
     Model mModel;
 
     /**
      * the presenter does not know anything about the actual UI passed as parameter as it comes as an instance of the UI interface
-     * @param application
+     *
+     * @param context     the context
+     * @param application the application
      */
     public Presenter(Context context, ViewInterface application) {
         userinterface= application;
@@ -37,8 +44,14 @@ public class Presenter implements PresenterInterface {
 
     /**
      * it receives confirmation of correct insertion of title and description. It sends them back to the UI
-     * @param temperature
-     * @param pressure
+     *
+     * @param temperature the temperature
+     * @param pressure    the pressure
+     * @param title       the title
+     * @param date        the date
+     * @param files       the files
+     * @param lat         the lat
+     * @param lng         the lng
      */
     public void dataInserted(float temperature, float pressure,String title, String date,String files,double lat,double lng){
         // send it back to the UI
@@ -47,9 +60,15 @@ public class Presenter implements PresenterInterface {
 
     /**
      * it receives confirmation of correct insertion of title and description. It sends them back to the UI
-     * @param temperature
-     * @param pressure
-     * @param errorString
+     *
+     * @param temperature the temperature
+     * @param pressure    the pressure
+     * @param title       the title
+     * @param date        the date
+     * @param files       the files
+     * @param lat         the lat
+     * @param lng         the lng
+     * @param errorString the error string
      */
     public void errorInsertingData(float temperature, float pressure,String title, String date,String files,double lat,double lng,String errorString){
         // send it back to the UI
@@ -57,6 +76,11 @@ public class Presenter implements PresenterInterface {
     }
 
 
+    /**
+     * Gets userinterface.
+     *
+     * @return the userinterface
+     */
     public ViewInterface getUserinterface() {
         return userinterface;
     }

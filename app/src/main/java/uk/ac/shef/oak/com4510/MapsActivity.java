@@ -52,6 +52,7 @@ import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.TreeMap;
 
 import pl.aprilapps.easyphotopicker.DefaultCallback;
 import pl.aprilapps.easyphotopicker.EasyImage;
@@ -59,7 +60,16 @@ import uk.ac.shef.oak.com4510.Entity.RecordMsg;
 import uk.ac.shef.oak.com4510.com4510.R;
 import uk.ac.shef.oak.com4510.presenter.Presenter;
 
+/**
+ * Activity recording the journey
+ *
+ * @author Yuzhou Zhang
+ * @version V1.0
+ */
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback,ViewInterface,RetrieveInterface{
+    /**
+     * The M presenter.
+     */
     Presenter mPresenter;
     private static AppCompatActivity activity;
     private static GoogleMap mMap;
@@ -77,17 +87,43 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private String title;
     private double lastLat = -34;
     private double lastLng = 151;
+    /**
+     * The constant pressure.
+     */
+    public static float pressure = 0;
+    /**
+     * The constant temperatrue.
+     */
+    public static float temperatrue = 0;
+    private Barometer barometer;
+    private Accelerometer accelerometer;
+    private Tempermeter tempermeter;
 
     private List<Location> locationList = new ArrayList<>();
 
+    /**
+     * do some necessary initialization work when this activity starts
+     *
+     * @return activity activity
+     */
     public static AppCompatActivity getActivity() {
         return activity;
     }
 
+    /**
+     * Sets activity.
+     *
+     * @param activity the activity
+     */
     public static void setActivity(AppCompatActivity activity) {
         MapsActivity.activity = activity;
     }
 
+    /**
+     * Gets map.
+     *
+     * @return the map
+     */
     public static GoogleMap getMap() {
         return mMap;
     }
@@ -97,7 +133,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         mPresenter  = new Presenter(getApplicationContext(),this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
-
+        barometer= new Barometer(this);
+        tempermeter = new Tempermeter(this);
+        accelerometer= new Accelerometer(this, barometer,tempermeter);
         setActivity(this);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -127,9 +165,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 EasyImage.openCamera(getActivity(), 0);
             }
         });
-        // 将计时器清零
+        initEasyImage();
         timer.setBase(SystemClock.elapsedRealtime());
-        //开始计时
         timer.start();
         FloatingActionButton fabGallery = (FloatingActionButton) findViewById(R.id.fab_gallery);
         fabGallery.setOnClickListener(new View.OnClickListener() {
@@ -140,6 +177,17 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         });
         initLocations();
     }
+    /**
+     * it initialize EasyImage.
+     */
+    private void initEasyImage() {
+        EasyImage.configuration(this)
+                .setImagesFolderName("EasyImage sample")
+                .setCopyTakenPhotosToPublicGalleryAppFolder(true)
+                .setCopyPickedImagesToPublicGalleryAppFolder(false)
+                .setAllowMultiplePickInGallery(true);
+    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -167,6 +215,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
         });
     }
+    /**
+     * it check location permission.
+     */
     private void initLocations() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // Should we show an explanation?
@@ -193,7 +244,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             return;
         }
     }
-
+    /**
+     * it starts the location updates by call location service.
+     */
     private void startLocationUpdates(Context context) {
         Intent intent = new Intent(context, LocationService.class);
         mLocationPendingIntent = PendingIntent.getService(context, 1, intent, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -235,6 +288,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     protected void onResume() {
         super.onResume();
+        accelerometer.startAccelerometerRecording();
         mLocationRequest = new LocationRequest();
         mLocationRequest.setInterval(20000);
         mLocationRequest.setFastestInterval(5000);
@@ -248,6 +302,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private Location mCurrentLocation;
     private String mLastUpdateTime;
+    /**
+     * The location callback function,to add a marker in the map.
+     */
     LocationCallback mLocationCallback = new LocationCallback() {
         @Override
         public void onLocationResult(LocationResult locationResult) {
@@ -336,10 +393,14 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             files += file.getAbsolutePath() + ";";
         }
 
-        mPresenter.insertData((float)0,(float)0,title,currDate,files,lastLat,lastLng);
+        mPresenter.insertData(temperatrue,pressure,title,currDate,files,lastLat,lastLng);
         Log.d("1212",title + " "+ files +" "+lastLat +" " +lastLng + " " + currDate);
 
     }
+    /**
+     * check permission to open the gallery and use camera.
+     * @param context
+     */
     private void checkPermissions(final Context context) {
         int currentAPIVersion = Build.VERSION.SDK_INT;
         if (currentAPIVersion >= android.os.Build.VERSION_CODES.M) {
