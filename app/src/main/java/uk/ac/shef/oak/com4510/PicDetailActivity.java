@@ -113,8 +113,9 @@ public class PicDetailActivity extends AppCompatActivity implements OnMapReadyCa
 
     }
 
+
     @Override
-    public List<RecordMsg> returnMsgs(List<RecordMsg> msgs) {
+    public List<RecordMsg> returnMsgs(List<RecordMsg> msgs)  {
         Log.d("tag", msgs.size() + "");
         fileName = getIntent().getStringExtra(POSITION);
         Log.d("tag", fileName);

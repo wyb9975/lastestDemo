@@ -46,7 +46,9 @@
         <activity
             android:name="uk.ac.shef.oak.com4510.StartActivity"
             android:label="@string/title_activity_maps"></activity>
-
+        <activity
+            android:name="uk.ac.shef.oak.com4510.PathActivity"
+            android:label="@string/title_activity_maps"></activity>
         <service android:name="uk.ac.shef.oak.com4510.LocationService" />
     </application>
 

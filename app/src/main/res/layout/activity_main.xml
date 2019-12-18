@@ -70,6 +70,32 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0pt"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0pt"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/button_path"
+                android:layout_width="0dp"
+                android:layout_height="35dp"
+                android:layout_weight="1"
+                android:adjustViewBounds="true"
+                android:background="@null"
+                android:gravity="center"
+                android:scaleType="fitCenter"
+                android:text="picture by path" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0pt"
             android:layout_weight="4"
             android:gravity="center"
             android:orientation="vertical">

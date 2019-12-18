@@ -2,6 +2,7 @@ package uk.ac.shef.oak.com4510;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -20,12 +21,15 @@ public class PictureActivity extends AppCompatActivity implements RetrieveInterf
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter  mAdapter;
     RetPresenter rpresenter;
+    private String date;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_picture);
         rpresenter= new RetPresenter(getApplicationContext(),this);
+        Intent intent = getIntent();
+        date = intent.getStringExtra("date");
         float a = 0;
         float b = 0;
         String title = "";
@@ -50,10 +54,15 @@ public class PictureActivity extends AppCompatActivity implements RetrieveInterf
     public List<RecordMsg> returnMsgs(List<RecordMsg> msgs) {
         mRecyclerView = (RecyclerView) findViewById(R.id.grid_recycler_view);
         // set up the RecyclerView
-        int numberOfColumns = 4;
+        int numberOfColumns = 2;
         mRecyclerView.setLayoutManager(new GridLayoutManager(this, numberOfColumns));
         List<String> files= new ArrayList<String>();
         for(int i = 0;i < msgs.size();i++){
+            Log.d("testDate",msgs.get(i).getDate());
+            Log.d("testDate2",date);
+            if(!date.equals("") && !msgs.get(i).getDate().equals(date)){
+                continue;
+            }
             String path = msgs.get(i).getFiles();
             path = path.substring(0,path.length() - 1);
             files.add(path);

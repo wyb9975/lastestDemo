@@ -13,6 +13,7 @@ public class MainActivity extends AppCompatActivity {
 
     Button tripButton;
     Button browseButton;
+    Button pathButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -20,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         tripButton = (Button) findViewById(R.id.button_Trip);
         browseButton = (Button)findViewById(R.id.button_record);
+        pathButton = (Button)findViewById(R.id.button_path);
         tripButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -31,9 +33,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, PictureActivity.class);
+                intent.putExtra("date", "");
                 startActivity(intent);
             }
         });
-
+        pathButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, PathActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }
