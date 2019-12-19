@@ -13,6 +13,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
@@ -39,7 +40,10 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -100,6 +104,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private Tempermeter tempermeter;
 
     private List<Location> locationList = new ArrayList<>();
+
+    private List<LatLng> picLocList = new ArrayList<>();
+    private List<Marker> markerList = new ArrayList<>();
 
     /**
      * do some necessary initialization work when this activity starts
@@ -316,8 +323,15 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             lastLng = mCurrentLocation.getLongitude();
             if (mMap != null) {
                 locationList.add(mCurrentLocation);
-                mMap.addMarker(new MarkerOptions().position(new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude()))
-                        .title(mLastUpdateTime));
+                Marker marker = mMap.addMarker(new MarkerOptions().position(new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude()))
+                        .title(mLastUpdateTime)
+                        .icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory.decodeResource
+                                (getResources(), R.drawable.ic_location))));
+                markerList.add(marker);
+            }
+
+            if (markerList.size() >= 2) {
+                markerList.get(markerList.size() - 1).remove();
             }
 
             if (locationList.size() >= 2) {
@@ -327,6 +341,15 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 polylineOptions.add(new LatLng(locationList.get(tmpLength - 2).getLatitude(), locationList.get(tmpLength - 2).getLongitude()));
                 polylineOptions.add(new LatLng(locationList.get(tmpLength - 1).getLatitude(), locationList.get(tmpLength - 1).getLongitude()));
                 mMap.addPolyline(polylineOptions);
+            }
+
+            if (picLocList.size() > 0) {
+                for (LatLng latLng : picLocList) {
+                    mMap.addMarker(new MarkerOptions().position(latLng)
+                            .title(mLastUpdateTime)
+                            .icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory.decodeResource
+                                    (getResources(), R.drawable.ic_small_location))));
+                }
             }
 
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude()), 14.0f));
@@ -377,6 +400,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         mMap.getUiSettings().setZoomControlsEnabled(true);
+        mMap.setMyLocationEnabled(true);
         // Add a marker in Sydney and move the camera
         LatLng sydney = new LatLng(-34, 151);
         mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
@@ -394,6 +418,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
 
         mPresenter.insertData(temperatrue,pressure,title,currDate,files,lastLat,lastLng);
+        picLocList.add(new LatLng(lastLat, lastLng));
         Log.d("1212",title + " "+ files +" "+lastLat +" " +lastLng + " " + currDate);
 
     }

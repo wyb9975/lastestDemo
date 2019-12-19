@@ -8,8 +8,11 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * The type Record msg.
@@ -32,6 +35,7 @@ public class RecordMsg {
     private double lat;
     @ColumnInfo(name = "lng")
     private double lng;
+
 
     /**
      * Instantiates a new Record msg.
