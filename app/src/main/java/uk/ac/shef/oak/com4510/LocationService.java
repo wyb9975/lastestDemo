@@ -13,10 +13,14 @@ import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * The Location service for goolge map.The class receive intent from activity
@@ -72,11 +76,13 @@ public class LocationService extends IntentService {
                                     if (MapsActivity.getMap() != null)
                                         MapsActivity.getMap().addMarker(new MarkerOptions().position(new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude()))
                                                 .title(mLastUpdateTime));
+
                                     CameraUpdate zoom = CameraUpdateFactory.zoomTo(15);
                                     // it centres the camera around the new location
                                     MapsActivity.getMap().moveCamera(CameraUpdateFactory.newLatLng(new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude())));
                                     // it moves the camera to the selected zoom
                                     MapsActivity.getMap().animateCamera(zoom);
+
                                 } catch (Exception e ){
                                     Log.e("LocationService", "Error cannot write on map "+e.getMessage());
                                 }

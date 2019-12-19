@@ -103,7 +103,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private Accelerometer accelerometer;
     private Tempermeter tempermeter;
 
-    private List<Location> locationList = new ArrayList<>();
+    private List<LatLng> locationList = new ArrayList<>();
 
     private List<LatLng> picLocList = new ArrayList<>();
     private List<Marker> markerList = new ArrayList<>();
@@ -322,38 +322,38 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             lastLat = mCurrentLocation.getLatitude();
             lastLng = mCurrentLocation.getLongitude();
             if (mMap != null) {
-                locationList.add(mCurrentLocation);
-                Marker marker = mMap.addMarker(new MarkerOptions().position(new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude()))
-                        .title(mLastUpdateTime)
-                        .icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory.decodeResource
-                                (getResources(), R.drawable.ic_location))));
-                markerList.add(marker);
+                locationList.add(new LatLng(lastLat, lastLng));
+                mMap.addMarker(new MarkerOptions()
+                        .position(new LatLng(mCurrentLocation.getLatitude(),
+                                mCurrentLocation.getLongitude()))
+                        .title(mLastUpdateTime));
+//                markerList.add(marker);
             }
 
 //            if (markerList.size() >= 2) {
 //                markerList.get(markerList.size() - 2).remove();
 //            }
 
+            Log.i("tag", locationList.size() + "");
             if (locationList.size() >= 2) {
+                Log.i("LINE", "Drawing!");
                 int tmpLength = locationList.size();
-                for (int i = 0; i < tmpLength - 1; i++) {
-                    PolylineOptions polylineOptions = new PolylineOptions();
-                    polylineOptions.add(new LatLng(locationList.get(i).getLatitude(),
-                            locationList.get(i).getLongitude()));
-                    polylineOptions.add(new LatLng(locationList.get(i + 1).getLatitude(),
-                            locationList.get(i + 1).getLongitude()));
-                    mMap.addPolyline(polylineOptions);
-                }
+                int i = tmpLength - 2;
+                PolylineOptions polylineOptions = new PolylineOptions();
+                polylineOptions.add(new LatLng(locationList.get(i).latitude,
+                        locationList.get(i).longitude));
+                polylineOptions.add(new LatLng(locationList.get(i + 1).latitude,
+                        locationList.get(i + 1).longitude));
+                polylineOptions.width(5);
+                mMap.addPolyline(polylineOptions);
             }
 
-            if (picLocList.size() > 0) {
-                for (LatLng latLng : picLocList) {
-                    mMap.addMarker(new MarkerOptions().position(latLng)
-                            .title(mLastUpdateTime)
-                            .icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory.decodeResource
-                                    (getResources(), R.drawable.ic_small_location))));
-                }
-            }
+//            if (picLocList.size() > 0) {
+//                for (LatLng latLng : picLocList) {
+//                    mMap.addMarker(new MarkerOptions().position(latLng)
+//                            .title(mLastUpdateTime));
+//                }
+//            }
 
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude()), 14.0f));
 
