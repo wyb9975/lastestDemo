@@ -330,9 +330,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 markerList.add(marker);
             }
 
-            if (markerList.size() >= 2) {
-                markerList.get(markerList.size() - 2).remove();
-            }
+//            if (markerList.size() >= 2) {
+//                markerList.get(markerList.size() - 2).remove();
+//            }
 
             if (locationList.size() >= 2) {
                 int tmpLength = locationList.size();
