@@ -338,11 +338,14 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
             if (locationList.size() >= 2) {
                 int tmpLength = locationList.size();
-                // Connect last two points
-                PolylineOptions polylineOptions = new PolylineOptions();
-                polylineOptions.add(new LatLng(locationList.get(tmpLength - 2).getLatitude(), locationList.get(tmpLength - 2).getLongitude()));
-                polylineOptions.add(new LatLng(locationList.get(tmpLength - 1).getLatitude(), locationList.get(tmpLength - 1).getLongitude()));
-                mMap.addPolyline(polylineOptions);
+                for (int i = 0; i < tmpLength - 1; i++) {
+                    PolylineOptions polylineOptions = new PolylineOptions();
+                    polylineOptions.add(new LatLng(locationList.get(i).getLatitude(),
+                            locationList.get(i).getLongitude()));
+                    polylineOptions.add(new LatLng(locationList.get(i + 1).getLatitude(),
+                            locationList.get(i + 1).getLongitude()));
+                    mMap.addPolyline(polylineOptions);
+                }
             }
 
             if (picLocList.size() > 0) {
