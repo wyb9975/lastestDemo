@@ -67,7 +67,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.View_Holder> {
         //Use the provided View Holder on the onCreateViewHolder method to populate the
         // current row on the RecyclerView
         if (holder!=null && files.get(position)!=null) {
-            Bitmap myBitmap = BitmapFactory.decodeFile(files.get(position));
+            Bitmap myBitmap = Util.decodeSampledBitmapFromResource(files.get(position),150,150);
             holder.imageView.setImageBitmap(myBitmap);
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
