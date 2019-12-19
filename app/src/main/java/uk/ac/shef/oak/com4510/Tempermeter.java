@@ -19,7 +19,11 @@ import android.util.Log;
 
 
 /**
- * The type Tempermeter.
+ * Tempermeter is the class which can start or stop temperature sensor.
+ * This class can record temperature for activity.
+ *
+ * @author Yuzhou Zhang
+ * @version 1.0
  */
 public class Tempermeter {
     private static final String TAG = Tempermeter.class.getSimpleName();
@@ -40,7 +44,7 @@ public class Tempermeter {
 
 
     /**
-     * Instantiates a new Tempermeter.
+     * Instantiates a new temperature sensor.
      *
      * @param context the context
      */
@@ -102,7 +106,7 @@ public class Tempermeter {
     }
 
     /**
-     * it starts the pressure monitoring
+     * it starts the temperature monitoring
      *
      * @param accelerometer the accelerometer
      */
@@ -124,7 +128,7 @@ public class Tempermeter {
 
 
     /**
-     * this stops the barometer
+     * this stops the temperature monitoring.
      */
     public void stopTemperm() {
         if (TemperatureSensorAvailable()) {
@@ -139,7 +143,7 @@ public class Tempermeter {
     }
 
     /**
-     * returns true if the barometer is currently working
+     * returns true if the temperature monitoring is currently working
      *
      * @return boolean
      */
