@@ -1,8 +1,8 @@
-package uk.ac.shef.oak.com4510;
+package uk.ac.shef.oak.com6510;
 
 import java.util.List;
 
-import uk.ac.shef.oak.com4510.Entity.RecordMsg;
+import uk.ac.shef.oak.com6510.Entity.RecordMsg;
 
 /**
  * The interface,provide some measure to make data interact with ui when insert data.

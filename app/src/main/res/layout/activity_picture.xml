@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="uk.ac.shef.oak.com4510.PictureActivity"
+    tools:context="uk.ac.shef.oak.com6510.PictureActivity"
     >
     <TextView
         android:id="@+id/textView"

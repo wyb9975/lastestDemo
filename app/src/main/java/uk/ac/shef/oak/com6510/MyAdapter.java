@@ -1,4 +1,4 @@
-package uk.ac.shef.oak.com4510;
+package uk.ac.shef.oak.com6510;
 
 /*
  * Copyright (c) 2017. This code has been developed by Fabio Ciravegna, The University of Sheffield. All rights reserved. No part of this code can be used without the explicit written permission by the author
@@ -7,7 +7,6 @@ package uk.ac.shef.oak.com4510;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,10 +14,9 @@ import android.widget.ImageView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.io.File;
 import java.util.List;
 
-import uk.ac.shef.oak.com4510.com4510.R;
+import uk.ac.shef.oak.com6510.com4510.R;
 
 /**
  * adapter interface that connects photo data and pictureActivity .

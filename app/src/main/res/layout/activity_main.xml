@@ -8,7 +8,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="uk.ac.shef.oak.com4510.StartActivity">
+    tools:context="uk.ac.shef.oak.com6510.StartActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

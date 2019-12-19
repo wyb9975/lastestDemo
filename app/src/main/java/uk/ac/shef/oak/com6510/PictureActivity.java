@@ -1,10 +1,8 @@
-package uk.ac.shef.oak.com4510;
+package uk.ac.shef.oak.com6510;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,9 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
-import uk.ac.shef.oak.com4510.Entity.RecordMsg;
-import uk.ac.shef.oak.com4510.com4510.R;
-import uk.ac.shef.oak.com4510.presenter.RetPresenter;
+import uk.ac.shef.oak.com6510.Entity.RecordMsg;
+import uk.ac.shef.oak.com6510.com4510.R;
+import uk.ac.shef.oak.com6510.presenter.RetPresenter;
 
 /**
  * The activity used to browse previews of photos.

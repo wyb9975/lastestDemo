@@ -1,4 +1,4 @@
-package uk.ac.shef.oak.com4510;
+package uk.ac.shef.oak.com6510;
 
 
 import android.content.Context;
@@ -12,8 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-import uk.ac.shef.oak.com4510.Entity.RecordMsg;
-import uk.ac.shef.oak.com4510.com4510.R;
+import uk.ac.shef.oak.com6510.Entity.RecordMsg;
+import uk.ac.shef.oak.com6510.com4510.R;
 
 /**
  * adapter interface that connects path data and pathActivity .

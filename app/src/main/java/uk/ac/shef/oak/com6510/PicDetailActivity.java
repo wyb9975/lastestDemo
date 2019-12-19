@@ -1,8 +1,7 @@
-package uk.ac.shef.oak.com4510;
+package uk.ac.shef.oak.com6510;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -14,15 +13,17 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import uk.ac.shef.oak.com4510.Entity.RecordMsg;
-import uk.ac.shef.oak.com4510.com4510.R;
-import uk.ac.shef.oak.com4510.presenter.RetPresenter;
+import uk.ac.shef.oak.com6510.Entity.RecordMsg;
+import uk.ac.shef.oak.com6510.com4510.R;
+import uk.ac.shef.oak.com6510.presenter.RetPresenter;
 
 /**
  * The activity used to inspect the details of a photo.
@@ -43,6 +44,10 @@ public class PicDetailActivity extends AppCompatActivity implements OnMapReadyCa
 
     private String fileName;
     private String title;
+
+    private String date;
+
+    private List<LatLng> otherPoints = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +97,15 @@ public class PicDetailActivity extends AppCompatActivity implements OnMapReadyCa
 //        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 14.0f));
         mMap.addMarker(new MarkerOptions().position(center).title(title));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(center, 14.0f));
+//
+        Log.i("tag", otherPoints.size() + "");
+        for (LatLng p : otherPoints) {
+            BitmapDescriptor icon = BitmapDescriptorFactory.fromResource(R.drawable.baseline_album_black_18);
+            mMap.addMarker(new MarkerOptions()
+                    .position(new LatLng(p.latitude, p.longitude))
+                    .title("")
+                    .icon(icon));
+        }
     }
 
     @Override
@@ -132,10 +146,17 @@ public class PicDetailActivity extends AppCompatActivity implements OnMapReadyCa
                 textView = findViewById(R.id.pd_tv);
                 textView.setText("Title: " + record.getTitle()
                         + "    Temperture: " + record.getTemperature()
-                        + "℃    Pressure: " + record.getPressure());
+                        + "    Pressure: " + record.getPressure());
                 center = new LatLng(record.getLat(), record.getLng());
                 title = record.getTitle();
-
+                date = record.getDate();
+            }
+        }
+        if (date != null) {
+            for (RecordMsg record : msgs) {
+                if (record.getDate().equals(date) && !record.getFiles().equals(fileName + ";")) {
+                    otherPoints.add(new LatLng(record.getLat(), record.getLng()));
+                }
             }
         }
         return msgs;

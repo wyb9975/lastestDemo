@@ -2,7 +2,7 @@
  * Copyright (c) 2019. This code has been developed by Fabio Ciravegna, The University of Sheffield. All rights reserved. No part of this code can be used without the explicit written permission by the author
  */
 
-package uk.ac.shef.oak.com4510;
+package uk.ac.shef.oak.com6510;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -13,7 +13,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
@@ -40,12 +39,9 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptor;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -56,13 +52,12 @@ import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.TreeMap;
 
 import pl.aprilapps.easyphotopicker.DefaultCallback;
 import pl.aprilapps.easyphotopicker.EasyImage;
-import uk.ac.shef.oak.com4510.Entity.RecordMsg;
-import uk.ac.shef.oak.com4510.com4510.R;
-import uk.ac.shef.oak.com4510.presenter.Presenter;
+import uk.ac.shef.oak.com6510.Entity.RecordMsg;
+import uk.ac.shef.oak.com6510.com4510.R;
+import uk.ac.shef.oak.com6510.presenter.Presenter;
 
 /**
  * Activity recording the journey
@@ -103,10 +98,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private Accelerometer accelerometer;
     private Tempermeter tempermeter;
 
-    private List<LatLng> locationList = new ArrayList<>();
+    private static List<LatLng> locationList = new ArrayList<>();
 
-    private List<LatLng> picLocList = new ArrayList<>();
-    private List<Marker> markerList = new ArrayList<>();
+    private static List<LatLng> picLocList = new ArrayList<>();
+    private static List<Marker> markerList = new ArrayList<>();
 
     /**
      * do some necessary initialization work when this activity starts
@@ -133,6 +128,18 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
      */
     public static GoogleMap getMap() {
         return mMap;
+    }
+
+    public static List<LatLng> getLocation() {
+        return locationList;
+    }
+
+    public static List<Marker> getMarkerList() {
+        return markerList;
+    }
+
+    public static List<LatLng> getPicLocList() {
+        return picLocList;
     }
 
     @Override
@@ -318,15 +325,15 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             super.onLocationResult(locationResult);
             mCurrentLocation = locationResult.getLastLocation();
             mLastUpdateTime = DateFormat.getTimeInstance().format(new Date());
-            Log.i("MAP", "new location " + mCurrentLocation.toString());
+            Log.i("MAP", "A new location " + mCurrentLocation.toString());
             lastLat = mCurrentLocation.getLatitude();
             lastLng = mCurrentLocation.getLongitude();
             if (mMap != null) {
-                locationList.add(new LatLng(lastLat, lastLng));
-                mMap.addMarker(new MarkerOptions()
-                        .position(new LatLng(mCurrentLocation.getLatitude(),
-                                mCurrentLocation.getLongitude()))
-                        .title(mLastUpdateTime));
+//                locationList.add(new LatLng(lastLat, lastLng));
+//                mMap.addMarker(new MarkerOptions()
+//                        .position(new LatLng(mCurrentLocation.getLatitude(),
+//                                mCurrentLocation.getLongitude()))
+//                        .title(mLastUpdateTime));
 //                markerList.add(marker);
             }
 
@@ -334,19 +341,19 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 //                markerList.get(markerList.size() - 2).remove();
 //            }
 
-            Log.i("tag", locationList.size() + "");
-            if (locationList.size() >= 2) {
-                Log.i("LINE", "Drawing!");
-                int tmpLength = locationList.size();
-                int i = tmpLength - 2;
-                PolylineOptions polylineOptions = new PolylineOptions();
-                polylineOptions.add(new LatLng(locationList.get(i).latitude,
-                        locationList.get(i).longitude));
-                polylineOptions.add(new LatLng(locationList.get(i + 1).latitude,
-                        locationList.get(i + 1).longitude));
-                polylineOptions.width(5);
-                mMap.addPolyline(polylineOptions);
-            }
+//            Log.i("tag", locationList.size() + "");
+//            if (locationList.size() >= 2) {
+//                Log.i("LINE", "Drawing!");
+//                int tmpLength = locationList.size();
+//                int i = tmpLength - 2;
+//                PolylineOptions polylineOptions = new PolylineOptions();
+//                polylineOptions.add(new LatLng(locationList.get(i).latitude,
+//                        locationList.get(i).longitude));
+//                polylineOptions.add(new LatLng(locationList.get(i + 1).latitude,
+//                        locationList.get(i + 1).longitude));
+//                polylineOptions.width(5);
+//                mMap.addPolyline(polylineOptions);
+//            }
 
 //            if (picLocList.size() > 0) {
 //                for (LatLng latLng : picLocList) {
@@ -403,7 +410,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         mMap.getUiSettings().setZoomControlsEnabled(true);
-        mMap.setMyLocationEnabled(true);
+//        mMap.setMyLocationEnabled(true);
         // Add a marker in Sydney and move the camera
         LatLng sydney = new LatLng(-34, 151);
         mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
@@ -506,4 +513,5 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     public List<RecordMsg> returnMsgs(List<RecordMsg> msgs) {
         return null;
     }
+
 }

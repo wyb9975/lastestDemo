@@ -1,4 +1,4 @@
-package uk.ac.shef.oak.com4510;
+package uk.ac.shef.oak.com6510;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,7 +7,7 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import uk.ac.shef.oak.com4510.com4510.R;
+import uk.ac.shef.oak.com6510.com4510.R;
 
 /**
  * The MainActivity is the program entry activity.There are three buttons on the interface.

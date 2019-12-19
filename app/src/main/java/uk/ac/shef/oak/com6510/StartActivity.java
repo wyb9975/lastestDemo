@@ -2,25 +2,19 @@
  * Copyright (c) 2019. This code has been developed by Fabio Ciravegna, The University of Sheffield. All rights reserved. No part of this code can be used without the explicit written permission by the author
  */
 
-package uk.ac.shef.oak.com4510;
+package uk.ac.shef.oak.com6510;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
-import uk.ac.shef.oak.com4510.Entity.RecordMsg;
-import uk.ac.shef.oak.com4510.com4510.R;
-import uk.ac.shef.oak.com4510.presenter.Presenter;
-import uk.ac.shef.oak.com4510.presenter.RetPresenter;
+import uk.ac.shef.oak.com6510.com4510.R;
 
 /**
  * The activity starting a new trip by user.User can input trip title and click start button
