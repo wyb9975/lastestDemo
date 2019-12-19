@@ -14,7 +14,11 @@ import android.util.Log;
 
 
 /**
- * The type Accelerometer.
+ * Accelerometer is the class which can start or stop accelerometer sensor,temperature sensor
+ * and pressure sensor.This class can provide record data for activity.
+ *
+ * @author Yuzhou Zhang
+ * @version 1.0
  */
 public class Accelerometer {
     private static final String TAG = Accelerometer.class.getSimpleName();
@@ -100,7 +104,7 @@ public class Accelerometer {
     }
 
     /**
-     * it starts the pressure monitoring
+     * it starts the pressure monitoring and temperature monitoring.
      */
     public void startAccelerometerRecording() {
         // if the sensor is null,then mSensorManager is null and we get a crash
@@ -116,7 +120,7 @@ public class Accelerometer {
 
 
     /**
-     * this stops the barometer
+     * this stops the barometer and temperature monitoring.
      */
     public void stopAccelerometer() {
         if (standardAccelerometerAvailable()) {
@@ -129,6 +133,7 @@ public class Accelerometer {
         }
         // remember to stop the barometer
         barometer.stopBarometer();
+        tempermeter.stopTemperm();
     }
 
 

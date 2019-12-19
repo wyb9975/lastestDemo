@@ -6,10 +6,13 @@ import uk.ac.shef.oak.com4510.Entity.RecordMsg;
 
 /**
  * The interface Retreive data presenter interface.
+ *
+ * @author Yuzhou Zhang
+ * @version 1.0
  */
 public interface RetPresenterInterface {
     /**
-     * Gets data.
+     * Gets data from dataBase.
      *
      * @param temperature the temperature
      * @param pressure    the pressure
@@ -22,7 +25,7 @@ public interface RetPresenterInterface {
     public void getData(float temperature, float pressure,String title, String date,String files,double lat,double lng);
 
     /**
-     * List data retreived.
+     * Gets data list from dataBase.
      *
      * @param myDataset the my dataset
      */

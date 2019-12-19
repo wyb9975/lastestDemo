@@ -23,7 +23,11 @@ import uk.ac.shef.oak.com4510.presenter.Presenter;
 import uk.ac.shef.oak.com4510.presenter.RetPresenter;
 
 /**
- * The activity starting a new trip by user.
+ * The activity starting a new trip by user.User can input trip title and click start button
+ * to start trip.
+ *
+ * @author Yuzhou Zhang
+ * @version V1.0
  */
 public class StartActivity extends AppCompatActivity{
     private Button mButtonStart;

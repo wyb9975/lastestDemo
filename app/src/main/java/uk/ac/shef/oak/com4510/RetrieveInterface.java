@@ -9,6 +9,9 @@ import uk.ac.shef.oak.com4510.Entity.RecordMsg;
 
 /**
  * The interface Retrieve interface,provide some measure to make data interact with ui when retrieve data.
+ *
+ * @author Yuzhou Zhang
+ * @version V1.0
  */
 public interface RetrieveInterface {
     /**

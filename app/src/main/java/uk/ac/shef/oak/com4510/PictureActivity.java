@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -20,10 +21,14 @@ import uk.ac.shef.oak.com4510.presenter.RetPresenter;
 
 /**
  * The activity used to browse previews of photos.
+ *
+ * @author Yuzhou Zhang
+ * @version V1.0
  */
 public class PictureActivity extends AppCompatActivity implements RetrieveInterface{
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter  mAdapter;
+    private TextView textView;
     /**
      * The Rpresenter.
      */
@@ -34,9 +39,14 @@ public class PictureActivity extends AppCompatActivity implements RetrieveInterf
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_picture);
+        textView = findViewById(R.id.textView);
         rpresenter= new RetPresenter(getApplicationContext(),this);
         Intent intent = getIntent();
         date = intent.getStringExtra("date");
+        String t = intent.getStringExtra("title");
+        if(!t.equals("")){
+            textView.setText(t);
+        }
         float a = 0;
         float b = 0;
         String title = "";

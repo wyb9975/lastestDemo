@@ -12,17 +12,16 @@ import uk.ac.shef.oak.com4510.RetrieveInterface;
 
 
 /**
- * The type Retreive presenter.
+ * RetPresenter is the class which implements RetPresenterInterface and provide some methods for
+ * data acquisition,which calls Model's methods to operate the database and Model call viewInterface's
+ * method to change UI.
+ *
+ * @author Yuzhou Zhang
+ * @version 1.0
  */
 public class RetPresenter implements RetPresenterInterface{
 
-    /**
-     * The Userinterface.
-     */
     RetrieveInterface userinterface;
-    /**
-     * The M model.
-     */
     Model mModel;
     private final List<RecordMsg> m_list_RecordMsg = new ArrayList<>();
 
@@ -50,7 +49,7 @@ public class RetPresenter implements RetPresenterInterface{
     }
 
     /**
-     * Data retrieved.
+     * it receives confirmation of correct retrieve of data. It sends them back to the UI.
      *
      * @param temperature the temperature
      * @param pressure    the pressure
@@ -65,6 +64,11 @@ public class RetPresenter implements RetPresenterInterface{
         userinterface.dataRetreived(temperature,pressure,title, date,files,lat,lng);
     }
 
+    /**
+     * it receives confirmation of correct retrieve of data list. It sends them back to the UI.
+     *
+     * @param myDataset the my dataset
+     */
     public void ListDataRetreived(ArrayList<RecordMsg> myDataset){
 
         userinterface.ListDataRetreived(myDataset);
@@ -72,7 +76,7 @@ public class RetPresenter implements RetPresenterInterface{
     };
 
     /**
-     * Data retreived.
+     * it receives confirmation of correct retrieve of data. It sends them back to the UI.
      *
      * @param myDataset the my dataset
      */
@@ -83,7 +87,7 @@ public class RetPresenter implements RetPresenterInterface{
     };
 
     /**
-     * Error retrieving data
+     * it receives confirmation of error retrieve of data. It sends them back to the UI.
      *
      * @param temperature the temperature
      * @param pressure    the pressure

@@ -15,12 +15,17 @@ import io.reactivex.annotations.NonNull;
 import static androidx.room.Room.databaseBuilder;
 
 /**
- * The type Record msg data base.
+ * RecordMsgDataBase is the abstract class which initial a Room database.
+ * The Room persistence library provides an abstraction layer over
+ * SQLite to allow fluent database access while harnessing the full power of SQLite.
+ *
+ * @author Yuzhou Zhang
+ * @version 1.0
  */
 @Database(entities = {RecordMsg.class}, version = 1, exportSchema = false)
 public abstract class RecordMsgDataBase extends RoomDatabase{
     /**
-     * Record msg dao record msg dao.
+     * Gets RecordMsgDAO.
      *
      * @return the record msg dao
      */

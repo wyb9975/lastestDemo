@@ -65,7 +65,9 @@ import uk.ac.shef.oak.com4510.com4510.R;
 import uk.ac.shef.oak.com4510.presenter.Presenter;
 
 /**
- * Activity recording the journey
+ * The MapActivity is the activity recording the trip.There are three buttons on the interface.
+ * one button is clicked to start a new trip,one button is clicked to browse photos by date,and
+ * the last button is clicked to browse photos by path.
  *
  * @author Yuzhou Zhang
  * @version V1.0
@@ -424,6 +426,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
     /**
      * check permission to open the gallery and use camera.
+     *
      * @param context
      */
     private void checkPermissions(final Context context) {

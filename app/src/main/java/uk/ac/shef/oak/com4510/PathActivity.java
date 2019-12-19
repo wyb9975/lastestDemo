@@ -18,7 +18,11 @@ import uk.ac.shef.oak.com4510.com4510.R;
 import uk.ac.shef.oak.com4510.presenter.RetPresenter;
 
 /**
- * The activity used to browse picture via a list .
+ * The activity used to browse picture via a list .a list item contain a trip title and start date
+ * of the trip.
+ *
+ * @author Yuzhou Zhang
+ * @version V1.0
  */
 public class PathActivity extends AppCompatActivity implements RetrieveInterface{
     private RecyclerView mRecyclerView;

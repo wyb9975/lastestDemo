@@ -25,7 +25,10 @@ import uk.ac.shef.oak.com4510.com4510.R;
 import uk.ac.shef.oak.com4510.presenter.RetPresenter;
 
 /**
- * The activity used to Inspect the details of a photo.
+ * The activity used to inspect the details of a photo.
+ *
+ * @author Yuzhou Zhang
+ * @version V1.0
  */
 public class PicDetailActivity extends AppCompatActivity implements OnMapReadyCallback, ViewInterface, RetrieveInterface {
 

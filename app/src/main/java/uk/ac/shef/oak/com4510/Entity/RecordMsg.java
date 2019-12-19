@@ -15,7 +15,11 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * The type Record msg.
+ * RecordMsg is the java bean class to store the data when user is traveling,containing trip title,
+ * start time,photo files,temperature,pressure and coordinate.
+ *
+ * @author Yuzhou Zhang
+ * @version 1.0
  */
 @Entity
 public class RecordMsg {

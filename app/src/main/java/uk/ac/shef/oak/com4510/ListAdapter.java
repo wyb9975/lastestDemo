@@ -3,24 +3,23 @@ package uk.ac.shef.oak.com4510;
 
 import android.content.Context;
 import android.content.Intent;
-import android.media.Image;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import uk.ac.shef.oak.com4510.Entity.RecordMsg;
 import uk.ac.shef.oak.com4510.com4510.R;
 
 /**
  * adapter interface that connects path data and pathActivity .
+ *
+ * @author Yuzhou Zhang
+ * @version 1.0
  */
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.View_Holder> {
     private Context context;
@@ -48,7 +47,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.View_Holder> {
     }
 
     /**
-     * Gets item.
+     * Gets item.using position of the item.
      *
      * @param id the id
      * @return the item
@@ -73,14 +72,8 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.View_Holder> {
         // current row on the RecyclerView
         if (holder!=null && position < items.size()) {
 
-            Log.d("qwqw" + position,items.get(position).size() +"");
-            for(int i = 0;i < items.get(position).size();i++){
-                Log.d("qwqw" + position,items.get(position).get(i).getDate());
-            }
             String date = items.get(position).get(0).getDate();
             String title = items.get(position).get(0).getTitle();
-            Log.d("qwqw" + position,date +" test");
-            Log.d("qwqw" + position,title +" test");
             holder.title.setText(date);
             holder.preview.setText(title);
             holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -88,6 +81,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.View_Holder> {
                 public void onClick(View v) {
                     Intent intent = new Intent(context, PictureActivity.class);
                     intent.putExtra("date", items.get(position).get(0).getDate());
+                    intent.putExtra("title", items.get(position).get(0).getTitle());
                     context.startActivity(intent);
                 }
             });
@@ -104,13 +98,8 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.View_Holder> {
      * The type View holder.
      */
     public class View_Holder extends RecyclerView.ViewHolder{
-        /**
-         * The Title.
-         */
+
         TextView title;
-        /**
-         * The Preview.
-         */
         TextView preview;
 
         /**

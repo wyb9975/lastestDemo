@@ -6,20 +6,21 @@ import uk.ac.shef.oak.com4510.Entity.Model;
 import uk.ac.shef.oak.com4510.ViewInterface;
 
 /**
- * The type Presenter.
+ * Presenter is the class which implements PresenterInterface and provide some methods for
+ * data acquisition,which calls Model's methods to operate the database and Model call
+ * viewInterface's method to change UI.
+ *
+ * @author Yuzhou Zhang
+ * @version 1.0
  */
 public class Presenter implements PresenterInterface {
-    /**
-     * The Userinterface.
-     */
+
     ViewInterface userinterface;
-    /**
-     * The M model.
-     */
     Model mModel;
 
     /**
-     * the presenter does not know anything about the actual UI passed as parameter as it comes as an instance of the UI interface
+     * the presenter does not know anything about the actual UI passed as parameter as it comes as
+     * an instance of the UI interface
      *
      * @param context     the context
      * @param application the application
@@ -32,6 +33,7 @@ public class Presenter implements PresenterInterface {
     /**
      * this is the presenter's interface method that enables the UI to call the presenter
      * it sends the data to the model
+     *
      * @param temperature
      * @param pressure
      */
@@ -43,7 +45,7 @@ public class Presenter implements PresenterInterface {
 
 
     /**
-     * it receives confirmation of correct insertion of title and description. It sends them back to the UI
+     * it receives confirmation of correct insertion of data. It sends them back to the UI
      *
      * @param temperature the temperature
      * @param pressure    the pressure
@@ -59,7 +61,7 @@ public class Presenter implements PresenterInterface {
     }
 
     /**
-     * it receives confirmation of correct insertion of title and description. It sends them back to the UI
+     * it receives confirmation of error insertion of data. It sends them back to the UI
      *
      * @param temperature the temperature
      * @param pressure    the pressure

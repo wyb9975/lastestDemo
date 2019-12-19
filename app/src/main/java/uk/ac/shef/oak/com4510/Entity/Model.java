@@ -13,26 +13,22 @@ import uk.ac.shef.oak.com4510.presenter.RetPresenter;
 
 
 /**
- * The type Model.
+ * Model is the class which provide some methods for data query and data acquisition,
+ * which allows presenter to query or get data from database using asynchronous task
+ * and callbacks the methods in the interface.This class Operate the database by calling dao.
+ *
+ * @author Yuzhou Zhang
+ * @version 1.0
  */
 public class Model {
     private final RecordMsgDAO recordMsgDAO;
-    /**
-     * The Presenter.
-     */
     Presenter presenter;
-    /**
-     * The Rpresenter.
-     */
     RetPresenter rpresenter;
-
-    //private final List<PhotoData> m_list_PhotoData = new ArrayList<>();
-
 
     /**
      * Instantiates a new Model.
      *
-     * @param context   the context
+     * @param context   the application context
      * @param presenter the presenter
      */
     public Model(Context context, Presenter presenter) {
@@ -45,7 +41,7 @@ public class Model {
     /**
      * Instantiates a new Model.
      *
-     * @param context    the context
+     * @param context    the application context
      * @param rpresenter the rpresenter
      */
     public Model(Context context, RetPresenter rpresenter) {
@@ -56,7 +52,7 @@ public class Model {
     }
 
     /**
-     * use dao to insert data into database
+     * Uses dao to insert data into database by using asynchronous task.
      *
      * @param temperature the temperature
      * @param pressure    the pressure
@@ -74,7 +70,7 @@ public class Model {
     }
 
     /**
-     * Gets data.
+     * Uses dao to get data from database by using asynchronous task.
      *
      * @param temperature the temperature
      * @param pressure    the pressure
@@ -150,7 +146,7 @@ public class Model {
         private final Presenter mPresenter;
 
         /**
-         * Instantiates a new Insert into db async.
+         * Instantiates a new InsertIntoDbAsync class.
          *
          * @param dao       the dao
          * @param data      the data

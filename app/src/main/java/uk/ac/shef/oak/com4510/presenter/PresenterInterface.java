@@ -2,10 +2,13 @@ package uk.ac.shef.oak.com4510.presenter;
 
 /**
  * The interface Presenter interface.
+ *
+ * @author Yuzhou Zhang
+ * @version 1.0
  */
 public interface PresenterInterface {
     /**
-     * Insert data.
+     * Inserts data to dataBase.
      *
      * @param temperature the temperature
      * @param pressure    the pressure

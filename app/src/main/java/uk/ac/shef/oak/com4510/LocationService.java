@@ -19,7 +19,11 @@ import java.text.DateFormat;
 import java.util.Date;
 
 /**
- * The type Location service.
+ * The Location service for goolge map.The class receive intent from activity
+ * and then add a marker in the map.
+ *
+ * @author Yuzhou Zhang
+ * @version 1.0
  */
 public class LocationService extends IntentService {
     private Location mCurrentLocation;

@@ -21,7 +21,10 @@ import java.util.List;
 import uk.ac.shef.oak.com4510.com4510.R;
 
 /**
- * adapter interface that connects path data and pictureActivity .
+ * adapter interface that connects photo data and pictureActivity .
+ *
+ * @author Yuzhou Zhang
+ * @version 1.0
  */
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.View_Holder> {
     static private Context context;
@@ -80,7 +83,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.View_Holder> {
 
 
     /**
-     * Gets item.
+     * Gets item.using the position of item.
      *
      * @param id the id
      * @return the item
@@ -120,7 +123,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.View_Holder> {
     }
 
     /**
-     * Gets items.
+     * Gets all the photos' files.
      *
      * @return the items
      */

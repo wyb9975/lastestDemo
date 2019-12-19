@@ -19,7 +19,11 @@ import android.util.Log;
 
 
 /**
- * The type Barometer.
+ * Barometer is the class which can start or stop pressure sensor.
+ * This class can provide record pressure for activity.
+ *
+ * @author Yuzhou Zhang
+ * @version 1.0
  */
 public class Barometer {
     private static final String TAG = Barometer.class.getSimpleName();
